@@ -3,23 +3,43 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Job Assistant</title>
+  <title>AI Resume Analyzer</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
   <div class="container">
-    <h1>AI Job Assistant</h1>
+    <h1>AI Resume Analyzer</h1>
 
-    <textarea id="cv" placeholder="Paste your CV here"></textarea>
+    <p class="subtitle">
+      Analyze your resume against any job description and generate a personalized cover letter.
+    </p>
 
-    <textarea id="job" placeholder="Paste job description here"></textarea>
+    <label class="field-label">
+        Resume
+    </label>
+
+    <textarea id="cv" placeholder="Paste your resume here..."></textarea>
+
+    <label class="field-label">
+        Job Description
+    </label>
+
+    <textarea id="job" placeholder="Paste the job description here..."></textarea>
 
     <button id="analyzeBtn">
-      Analyze
+      Analyze Resume
     </button>
 
-    <div id="result"></div>
+    <div id="result">
+        <p class="empty-state">
+            Paste your resume and job description to get AI-powered analysis.
+        </p>
+    </div>
   </div>
 
   <script src="script.js"></script>
