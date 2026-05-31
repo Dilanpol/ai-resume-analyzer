@@ -1,5 +1,29 @@
 const button = document.getElementById("analyzeBtn");
 
+const fileInput =
+    document.getElementById("resumeFile");
+
+const fileStatus =
+    document.getElementById("fileStatus");
+
+fileInput.addEventListener("change", () => {
+
+    const file =
+        fileInput.files[0];
+
+    if (!file) {
+
+        fileStatus.innerText =
+            "No file selected";
+
+        return;
+    }
+
+    fileStatus.innerText =
+        `📄 ${file.name}`;
+
+});
+
 button.addEventListener("click", async () => {
 
     let dotsInterval;
