@@ -7,14 +7,60 @@ button.addEventListener("click", async () => {
     const cv = document.getElementById("cv").value;
     const job = document.getElementById("job").value;
 
-    if (!cv.trim() || !job.trim()) {
-        alert("Please fill in both fields");
+    const file =
+        document.getElementById("resumeFile")
+            .files[0];
+
+    if ((!cv.trim() && !file) || !job.trim()) {
+
+        alert(
+            "Please provide a resume and job description"
+        );
+
         return;
     }
 
     try {
 
         button.disabled = true;
+
+        let resumeText = cv;
+
+            if (file) {
+
+                const formData = new FormData();
+
+                formData.append(
+                    "resume",
+                    file
+                );
+
+                const uploadResponse =
+                    await fetch(
+                        "http://localhost:3000/upload-resume",
+                        {
+                            method: "POST",
+                            body: formData
+                        }
+                    );
+
+                if (!uploadResponse.ok) {
+
+                    throw new Error(
+                        "Failed to parse PDF"
+                    );
+
+                }
+
+                const uploadData =
+                    await uploadResponse.json();
+
+                console.log(uploadData);
+
+                resumeText =
+                    uploadData.text;
+
+            }
 
         document.getElementById("result").innerHTML = `
 
@@ -108,7 +154,7 @@ button.addEventListener("click", async () => {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    cv,
+                    cv: resumeText,
                     job
                 })
             }
