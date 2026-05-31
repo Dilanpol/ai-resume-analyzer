@@ -57,6 +57,7 @@ Return ONLY valid JSON.
 Example:
 
 {
+  "matchScore": 82,
   "missingSkills": [
     "React",
     "Docker",
@@ -68,6 +69,8 @@ Example:
   ],
   "coverLetter": "Short cover letter here"
 }
+
+matchScore must be an integer from 0 to 100.
 
 Do not add explanations.
 Do not use markdown.
