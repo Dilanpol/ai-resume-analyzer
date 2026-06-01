@@ -48,6 +48,9 @@ button.addEventListener("click", async () => {
 
         button.disabled = true;
 
+        button.innerText =
+            "Analyzing...";
+
         let resumeText = cv;
 
             if (file) {
@@ -90,53 +93,59 @@ button.addEventListener("click", async () => {
 
             <div class="loading-box">
 
-                <h3>🤖 AI is analyzing your resume...</h3>
+                <h3>
+                    AI is analyzing your resume
+                </h3>
 
-                <p id="step1">
-                    ⏳ Comparing skills...
-                </p>
+                <div id="step1" class="loading-step">
+                    ⏳ Comparing skills
+                </div>
 
-                <p id="step2">
-                    ⏳ Evaluating experience...
-                </p>
+                <div id="step2" class="loading-step">
+                    ⏳ Evaluating experience
+                </div>
 
-                <p id="step3">
-                    ⏳ Generating cover letter...
-                </p>
+                <div id="step3" class="loading-step">
+                    ⏳ Generating cover letter
+                </div>
 
             </div>
 
         `;
 
-        const loadingTitle =
-            document.querySelector(".loading-box h3");
-
-        let dots = "";
-
-        dotsInterval = setInterval(() => {
-
-            dots += ".";
-
-            if (dots.length > 3) {
-                dots = "";
-            }
-
-            if (loadingTitle) {
-                loadingTitle.innerText =
-                    `🤖 AI is analyzing your resume${dots}`;
-            }
-
-        }, 500);
+        document
+            .getElementById("step1")
+            .classList
+            .add("active-step");
 
         setTimeout(() => {
 
             const step1 =
                 document.getElementById("step1");
 
+            const step2 =
+                document.getElementById("step2");
+
             if (step1) {
+
+                step1.classList.remove(
+                    "active-step"
+                );
+
+                step1.classList.add(
+                    "completed-step"
+                );
 
                 step1.innerText =
                     "✅ Comparing skills";
+
+            }
+
+            if (step2) {
+
+                step2.classList.add(
+                    "active-step"
+                );
 
             }
 
@@ -147,10 +156,29 @@ button.addEventListener("click", async () => {
             const step2 =
                 document.getElementById("step2");
 
+            const step3 =
+                document.getElementById("step3");
+
             if (step2) {
+
+                step2.classList.remove(
+                    "active-step"
+                );
+
+                step2.classList.add(
+                    "completed-step"
+                );
 
                 step2.innerText =
                     "✅ Evaluating experience";
+
+            }
+
+            if (step3) {
+
+                step3.classList.add(
+                    "active-step"
+                );
 
             }
 
@@ -162,6 +190,14 @@ button.addEventListener("click", async () => {
                 document.getElementById("step3");
 
             if (step3) {
+
+                step3.classList.remove(
+                    "active-step"
+                );
+
+                step3.classList.add(
+                    "completed-step"
+                );
 
                 step3.innerText =
                     "✅ Generating cover letter";
@@ -206,53 +242,68 @@ button.addEventListener("click", async () => {
                 </div>
             </div>
 
-            <h2>Missing Skills</h2>
+            <div class="result-card">
 
-            <ul>
-                ${result.missingSkills
-                    .map(skill => `<li>${skill}</li>`)
-                    .join("")}
-            </ul>
+                <h2>Missing Skills</h2>
 
-            <hr class="section-divider">
+                <ul>
+                    ${result.missingSkills
+                        .map(skill => `<li>${skill}</li>`)
+                        .join("")}
+                </ul>
 
-            <h2>CV Improvements</h2>
+            </div>
 
-            <ul>
-                ${result.improvements
-                    .map(item => `<li>${item}</li>`)
-                    .join("")}
-            </ul>
+            <div class="result-card">
 
-            <hr class="section-divider">
+                <h2>CV Improvements</h2>
 
-            <div class="cover-header">
+                <ul>
+                    ${result.improvements
+                        .map(item => `<li>${item}</li>`)
+                        .join("")}
+                </ul>
 
-                <h2>Cover Letter</h2>
+            </div>
 
-                <div class="action-buttons">
+            <div class="result-card">
 
-                    <button id="copyBtn" class="copy-btn">
-                        Copy
-                    </button>
+                <div class="cover-header">
 
-                    <button id="downloadBtn" class="copy-btn">
-                        Download TXT
-                    </button>
+                    <h2>Cover Letter</h2>
 
-                    <button id="pdfBtn" class="copy-btn">
-                        Download PDF
-                    </button>
+                    <div class="action-buttons">
+
+                        <button
+                            id="copyBtn"
+                            class="copy-btn"
+                        >
+                            Copy
+                        </button>
+
+                        <button
+                            id="downloadBtn"
+                            class="copy-btn"
+                        >
+                            Download TXT
+                        </button>
+
+                        <button
+                            id="pdfBtn"
+                            class="copy-btn"
+                        >
+                            Download PDF
+                        </button>
+
+                    </div>
 
                 </div>
 
-            </div>
+                <div id="coverLetterText">
+                    ${result.coverLetter}
+                </div>
 
-            <div id="coverLetterText">
-                ${result.coverLetter}
             </div>
-
-        </div>
 
         `;
 
@@ -383,6 +434,9 @@ button.addEventListener("click", async () => {
         clearInterval(dotsInterval);
 
         button.disabled = false;
+
+        button.innerText =
+            "Analyze Resume";
 
     }
 

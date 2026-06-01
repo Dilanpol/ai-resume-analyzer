@@ -9,6 +9,22 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+  />
+
+  <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+  />
+
+  <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+  />
 </head>
 <body>
 
@@ -23,17 +39,38 @@
         Resume
     </label>
 
-    <input
-        type="file"
-        id="resumeFile"
-        accept=".pdf,.docx"
-    />
+    <div class="upload-section">
 
-    <div id="fileStatus" class="file-status">
-        No file selected
+        <input
+            type="file"
+            id="resumeFile"
+            accept=".pdf,.docx"
+            hidden
+        />
+
+        <label
+            for="resumeFile"
+            class="upload-btn">
+
+            📄 Upload Resume
+
+        </label>
+
+        <div id="fileStatus" class="file-status">
+            No file selected
+        </div>
+
     </div>
 
-    <textarea id="cv" placeholder="Paste your resume here..."></textarea>
+    <div class="or-divider">
+        <span>OR</span>
+    </div>
+
+    <textarea
+        id="cv"
+        class="resume-textarea"
+        placeholder="Paste your resume here..."
+    ></textarea>
 
     <label class="field-label">
         Job Description

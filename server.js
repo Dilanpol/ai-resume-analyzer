@@ -111,6 +111,60 @@ app.post(
     }
 );
 
+async function generateWithRetry(
+    model,
+    prompt,
+    retries = 2
+) {
+
+    for (
+        let attempt = 0;
+        attempt <= retries;
+        attempt++
+    ) {
+
+        try {
+
+            return await model.generateContent(
+                prompt
+            );
+
+        }
+
+        catch (error) {
+
+            const status =
+                error.status;
+
+            const is503 =
+                status === 503;
+
+            const isLastAttempt =
+                attempt === retries;
+
+            if (!is503 || isLastAttempt) {
+
+                throw error;
+
+            }
+
+            const delay =
+                (attempt + 1) * 2000;
+
+            console.log(
+                `503 error. Retrying in ${delay}ms...`
+            );
+
+            await new Promise(resolve =>
+                setTimeout(resolve, delay)
+            );
+
+        }
+
+    }
+
+}
+
 app.post("/analyze", async (req, res) => {
 
     try {
@@ -165,7 +219,11 @@ Do not wrap JSON in code blocks.
 Return JSON only.
 `;
 
-        const result = await model.generateContent(prompt);
+        const result =
+            await generateWithRetry(
+                model,
+                prompt
+            );
 
         const response = await result.response.text();
 
@@ -210,58 +268,117 @@ app.post("/download-report", (req, res) => {
 
     doc.pipe(res);
 
-    doc
-        .fontSize(22)
-        .text(
-            "AI Resume Analysis Report",
-            {
-                align: "center"
-            }
-        );
+// Header
 
-    doc.moveDown();
-
-    doc
-        .fontSize(16)
-        .text(
-            `Match Score: ${matchScore}%`
-        );
-
-    doc.moveDown();
-
-    doc
-        .fontSize(18)
-        .text("Missing Skills");
-
-    missingSkills.forEach(skill => {
-
-        doc.text(`• ${skill}`);
-
+doc
+    .fillColor("#2563eb")
+    .fontSize(28)
+    .text("AI Resume Analyzer", {
+        align: "center"
     });
 
-    doc.moveDown();
+doc.moveDown(0.2);
 
-    doc
-        .fontSize(18)
-        .text("CV Improvements");
-
-    improvements.forEach(item => {
-
-        doc.text(`• ${item}`);
-
+doc
+    .fillColor("#6b7280")
+    .fontSize(12)
+    .text("Resume Analysis Report", {
+        align: "center"
     });
 
-    doc.moveDown();
+doc.moveDown(1);
 
-    doc
-        .fontSize(18)
-        .text("Cover Letter");
+// Match Score
+
+doc
+    .fillColor("#111827")
+    .fontSize(18)
+    .text("Match Score");
+
+doc
+    .fillColor("#2563eb")
+    .fontSize(32)
+    .text(`${matchScore}%`);
+
+doc.moveDown(0.3);
+
+// Divider
+
+doc
+    .moveTo(50, doc.y)
+    .lineTo(550, doc.y)
+    .strokeColor("#d1d5db")
+    .stroke();
+
+doc.moveDown(0.5);
+
+missingSkills.forEach(skill => {
 
     doc
         .fontSize(12)
-        .text(coverLetter);
+        .fillColor("#374151")
+        .text(`• ${skill}`);
 
-    doc.end();
+});
+
+doc.moveDown();
+
+// Divider
+
+doc
+    .moveTo(50, doc.y)
+    .lineTo(550, doc.y)
+    .strokeColor("#d1d5db")
+    .stroke();
+
+doc.moveDown();
+
+// CV Improvements
+
+doc
+    .fillColor("#111827")
+    .fontSize(18)
+    .text("CV Improvements");
+
+doc.moveDown(0.5);
+
+improvements.forEach(item => {
+
+    doc
+        .fontSize(12)
+        .fillColor("#374151")
+        .text(`• ${item}`);
+
+});
+
+doc.moveDown();
+
+// Divider
+
+doc
+    .moveTo(50, doc.y)
+    .lineTo(550, doc.y)
+    .strokeColor("#d1d5db")
+    .stroke();
+
+doc.moveDown();
+
+doc
+    .fillColor("#111827")
+    .fontSize(18)
+    .text("Cover Letter");
+
+doc.moveDown(0.5);
+
+doc
+    .fontSize(12)
+    .fillColor("#374151")
+    .text(coverLetter, {
+        align: "left",
+        lineGap: 4
+    });
+
+doc.end();
 
 });
 
