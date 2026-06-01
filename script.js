@@ -240,6 +240,10 @@ button.addEventListener("click", async () => {
                         Download TXT
                     </button>
 
+                    <button id="pdfBtn" class="copy-btn">
+                        Download PDF
+                    </button>
+
                 </div>
 
             </div>
@@ -257,6 +261,9 @@ button.addEventListener("click", async () => {
 
     const downloadBtn =
         document.getElementById("downloadBtn");
+
+    const pdfBtn =
+        document.getElementById("pdfBtn");
 
     copyBtn.addEventListener("click", async () => {
 
@@ -301,6 +308,61 @@ button.addEventListener("click", async () => {
         URL.revokeObjectURL(url);
 
     });
+
+    pdfBtn.addEventListener(
+        "click",
+        async () => {
+
+            const response =
+                await fetch(
+                    "http://localhost:3000/download-report",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body: JSON.stringify({
+
+                            matchScore:
+                                result.matchScore,
+
+                            missingSkills:
+                                result.missingSkills,
+
+                            improvements:
+                                result.improvements,
+
+                            coverLetter:
+                                result.coverLetter
+
+                        })
+
+                    }
+                );
+
+            const blob =
+                await response.blob();
+
+            const url =
+                URL.createObjectURL(blob);
+
+            const a =
+                document.createElement("a");
+
+            a.href = url;
+
+            a.download =
+                "resume-report.pdf";
+
+            a.click();
+
+            URL.revokeObjectURL(url);
+
+        }
+    );
 
     }
 

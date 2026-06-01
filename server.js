@@ -5,6 +5,7 @@ const cors = require("cors");
 const multer = require("multer");
 const pdfParse = require("pdf-parse");
 const mammoth = require("mammoth");
+const PDFDocument = require("pdfkit");
 
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
@@ -183,6 +184,84 @@ Return JSON only.
         });
 
     }
+
+});
+
+app.post("/download-report", (req, res) => {
+
+    const {
+        matchScore,
+        missingSkills,
+        improvements,
+        coverLetter
+    } = req.body;
+
+    const doc = new PDFDocument();
+
+    res.setHeader(
+        "Content-Type",
+        "application/pdf"
+    );
+
+    res.setHeader(
+        "Content-Disposition",
+        "attachment; filename=resume-report.pdf"
+    );
+
+    doc.pipe(res);
+
+    doc
+        .fontSize(22)
+        .text(
+            "AI Resume Analysis Report",
+            {
+                align: "center"
+            }
+        );
+
+    doc.moveDown();
+
+    doc
+        .fontSize(16)
+        .text(
+            `Match Score: ${matchScore}%`
+        );
+
+    doc.moveDown();
+
+    doc
+        .fontSize(18)
+        .text("Missing Skills");
+
+    missingSkills.forEach(skill => {
+
+        doc.text(`• ${skill}`);
+
+    });
+
+    doc.moveDown();
+
+    doc
+        .fontSize(18)
+        .text("CV Improvements");
+
+    improvements.forEach(item => {
+
+        doc.text(`• ${item}`);
+
+    });
+
+    doc.moveDown();
+
+    doc
+        .fontSize(18)
+        .text("Cover Letter");
+
+    doc
+        .fontSize(12)
+        .text(coverLetter);
+
+    doc.end();
 
 });
 
