@@ -1,9 +1,9 @@
 {
-  "name": "ai_job_assistant",
+  "name": "ai-resume-analyzer",
   "version": "1.0.0",
-  "description": "A simple AI-powered web app that helps users improve their CVs and generate job application responses.",
-  "main": "script.js",
+  "main": "server.js",
   "scripts": {
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
