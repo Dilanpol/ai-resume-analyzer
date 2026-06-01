@@ -64,7 +64,7 @@ button.addEventListener("click", async () => {
 
                 const uploadResponse =
                     await fetch(
-                        "http://localhost:3000/upload-resume",
+                        "/upload-resume",
                         {
                             method: "POST",
                             body: formData
@@ -207,7 +207,7 @@ button.addEventListener("click", async () => {
         }, 9000);
 
         const response = await fetch(
-            "http://localhost:3000/analyze",
+            "/analyze",
             {
                 method: "POST",
                 headers: {
@@ -366,7 +366,7 @@ button.addEventListener("click", async () => {
 
             const response =
                 await fetch(
-                    "http://localhost:3000/download-report",
+                    "/download-report",
                     {
                         method: "POST",
 
