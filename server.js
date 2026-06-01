@@ -4,6 +4,7 @@ const express = require("express");
 const cors = require("cors");
 const multer = require("multer");
 const pdfParse = require("pdf-parse");
+const mammoth = require("mammoth");
 
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
@@ -36,29 +37,72 @@ app.post(
         try {
 
             if (!req.file) {
+
                 return res.status(400).json({
                     error: "No file uploaded"
                 });
+
             }
 
-            console.log("PDF upload started");
+            const fileName =
+                req.file.originalname.toLowerCase();
 
-            const pdfData =
-                await pdfParse(req.file.buffer);
+            let text = "";
+
+            if (fileName.endsWith(".pdf")) {
+
+                console.log("PDF upload started");
+
+                const pdfData =
+                    await pdfParse(req.file.buffer);
+
+                text = pdfData.text;
+
+                console.log(
+                    "PDF parsed successfully"
+                );
+
+            }
+
+            else if (fileName.endsWith(".docx")) {
+
+                console.log("DOCX upload started");
+
+                const result =
+                    await mammoth.extractRawText({
+                        buffer: req.file.buffer
+                    });
+
+                text = result.value;
+
+                console.log(
+                    "DOCX parsed successfully"
+                );
+
+            }
+
+            else {
+
+                return res.status(400).json({
+                    error:
+                        "Only PDF and DOCX files are supported"
+                });
+
+            }
 
             res.json({
-                text: pdfData.text
+                text
             });
 
-            console.log("PDF parsed successfully");
-
         }
+
         catch (error) {
 
             console.error(error);
 
             res.status(500).json({
-                error: "Failed to read PDF"
+                error:
+                    "Failed to read resume file"
             });
 
         }
