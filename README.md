@@ -80,28 +80,24 @@ Upload a PDF or DOCX resume, compare it with a job posting, receive a match scor
 ## Screenshots
 
 ### Home Screen
-
-(Add screenshot here)
+![Home Screen](assets/screenshot-01-home.png)
 
 ### Analysis in Progress
-
-(Add screenshot here)
+![Loading](assets/screenshot-02-loading.png)
 
 ### Analysis Results
-
-(Add screenshot here)
+![Results](assets/screenshot-03-results.png)
 
 ### PDF Report
-
-(Add screenshot here)
+![PDF](assets/screenshot-04-pdf.png)
 
 ---
 
 ## Demo Video
 
-(Add demo video link here)
+Watch the project demo:
 
-Recommended video length: 1–2 minutes.
+https://youtu.be/swjfmpomR0c
 
 ---
 
