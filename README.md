@@ -8,7 +8,9 @@ Upload a PDF or DOCX resume, compare it with a job posting, receive a match scor
 
 **Application:** https://ai-job-assistant-vjjk.onrender.com
 
-**GitHub Repository:** https://github.com/Dilanpol/ai-resume-analyzer
+## Demo Video
+
+https://youtu.be/swjfmpomR0c
 
 ---
 
@@ -90,14 +92,6 @@ Upload a PDF or DOCX resume, compare it with a job posting, receive a match scor
 
 ### PDF Report
 ![PDF](assets/screenshot-04-pdf.png)
-
----
-
-## Demo Video
-
-Watch the project demo:
-
-https://youtu.be/swjfmpomR0c
 
 ---
 
