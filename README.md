@@ -1,12 +1,14 @@
 # AI Resume Analyzer
 
-AI-powered web application that analyzes a resume against a job description, calculates a match score, identifies missing skills, suggests CV improvements, and generates a personalized cover letter.
+Analyze your resume against any job description using AI.
+
+Upload a PDF or DOCX resume, compare it with a job posting, receive a match score, identify missing skills, and generate a personalized cover letter instantly.
 
 ## Live Demo
 
 **Application:** https://ai-job-assistant-vjjk.onrender.com
 
-**GitHub Repository:** https://github.com/Dilanpol/ai_job_assistant
+**GitHub Repository:** https://github.com/Dilanpol/ai-resume-analyzer
 
 ---
 
@@ -108,7 +110,7 @@ Recommended video length: 1–2 minutes.
 Clone the repository:
 
 ```bash
-git clone https://github.com/Dilanpol/ai_job_assistant.git
+git clone https://github.com/Dilanpol/ai-resume-analyzer.git
 cd ai_job_assistant
 ```
 
