@@ -310,6 +310,13 @@ doc
 
 doc.moveDown(0.5);
 
+doc
+    .fillColor("#111827")
+    .fontSize(18)
+    .text("Missing Skills");
+
+doc.moveDown(0.5);
+
 missingSkills.forEach(skill => {
 
     doc
